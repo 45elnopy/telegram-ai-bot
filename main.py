@@ -7,8 +7,8 @@ import os
 import threading
 
 # ================= CONFIG =================
-BOT_TOKEN = "8404928684:AAHIO2ZXYBkr5IttEXZnh_Yooaq4QLx24pk"
-CHAT_ID = "1019525343"
+BOT_TOKEN = os.getenv("BOT_TOKEN")  # احصل على التوكن من Environment Variables
+CHAT_ID = os.getenv("CHAT_ID")      # احصل على Chat ID من Environment Variables
 INTERVAL = Client.KLINE_INTERVAL_15MINUTE
 LIMIT = 200
 
@@ -204,7 +204,6 @@ def run_bot():
         if not signal:
             continue
 
-        # إرسال إشعار فوري عند تغير الإشارة
         if last_signals.get(symbol) and last_signals[symbol] != signal:
             send_telegram_all(f"⚠️ تغيرت إشارة {symbol} من {last_signals[symbol]} إلى {signal}")
 
@@ -241,7 +240,7 @@ TF: 15M
 def telegram_thread():
     while True:
         check_telegram_messages()
-        time.sleep(0.5)  # فحص أسرع للزر
+        time.sleep(0.5)
 
 def bot_thread():
     while True:
